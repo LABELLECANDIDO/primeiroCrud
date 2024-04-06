@@ -43,9 +43,10 @@ function getAllPessoas() {
           <td>
           <button onclick="editarPessoa(${pessoa.id})" type="button" class="btn btn-primary">Editar</button>
           <button onclick="excluirPessoa(${pessoa.id})" type="button" class="btn btn-danger">Excluir</button>
-          </td>
+      </td>
       </tr>`;
       }
+
       tbody.innerHTML = listData;
       });
     }
@@ -54,22 +55,33 @@ function getAllPessoas() {
 
 function mostrarForm(){
   console.log("mostrei form subiu table");
-	document.getElementById('formPessoa').style = "display: block"
-	document.getElementById('tablePessoa').style = "display: none"
+	document.getElementById('formPessoa').style = "display: block";
+	document.getElementById('tablePessoa').style = "display: none";
 }
 
 function mostrarTable(){
   console.log("mostrei table subiu ");
-  document.getElementById('tablePessoa').style = "display: block"
-  document.getElementById('formPessoa').style = "display: none"
+  document.getElementById('tablePessoa').style = "display: block";
+  document.getElementById('formPessoa').style = "display: none";
 }
-function editarPessoa(id){
-console.log("editando",id)
+
+function editarPessoa(id) {
+	fetch(`${urlApi}/${id}`, { method: "GET" })
+		.then((res) => {
+			return res.json();
+		})
+		.then((pessoa) => {
+			console.log(pessoa);
+			document.getElementById("nome").value = pessoa.nome;
+			document.getElementById("idade").value = pessoa.idade;
+			document.getElementById("email").value = pessoa.email;
+			document.getElementById("id").value = pessoa.id;
+			mostrarForm()
+		});
 }
+
 function excluirPessoa(id) {
-	console.log("excluindo", id);
-	fetch(urlApi + id, { method: "DELETE" }).then((res) => {
-		console.log("ta indo", res);
+	fetch(`${urlApi}/${id}`, { method:"DELETE"}).then((res) => {
 		getAllPessoas();
 	});
 }
