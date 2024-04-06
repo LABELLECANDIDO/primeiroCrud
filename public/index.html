@@ -9,155 +9,87 @@
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="css/style.css">
     <title>Crud</title>
   </head>
   <body>
-    <div class="container">
-      <h1 style="text-align: center">CRUD</h1>
+		<div class="container">
+			<h1 style="text-align:center">Meu primeiro CRUD</h1>
 
-      <form id="formPessoa" class="needs-validation" novalidate>
-        <div class="form-row">
-          <div class="col-md-4 mb-3">
-            <label for="nome">Nome</label>
-            <input
-              type="text"
-              name="nome"
-              class="form-control"
-              id="nome"
-              placeholder="Digite seu nome"
-              value=""
-              required
-            />
-            <div class="valid-feedback">Nome informado</div>
-            <div class="invalid-feedback">O nome deve ser informado</div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="idade">Idade</label>
-            <input
-              type="text"
-              name="idade"
-              class="form-control"
-              id="idade"
-              placeholder="Digite sua idade"
-              value=""
-              required
-            />
-            <div class="valid-feedback">Idade informada</div>
-            <div class="invalid-feedback">a idade deve ser informado</div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              class="form-control"
-              id="email"
-              placeholder="digite seu email"
-              value=""
-              required
-            />
-            <div class="valid-feedback">email informado</div>
-            <div class="invalid-feedback">O email deve ser informado</div>
-          </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Enviar</button>
-      </form>
+			<form id="formPessoa" class="needs-validation" novalidate>
+     
+				<div class="form-row">
+					<div class="col-md-4 mb-3">
+						<label for="nome">Nome</label>
+						<input
+							type="text"
+							name="nome"
+							class="form-control"
+							id="nome"
+							placeholder="Digite seu nome"
+							value=""
+							required
+						/>
+						<div class="valid-feedback">Nome informado</div>
+						<div class="invalid-feedback">O nome deve ser informado</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="idade">Idade</label>
+						<input
+							type="text"
+							name="idade"
+							class="form-control"
+							id="idade"
+							placeholder="Digite sua idade"
+							value=""
+							required
+						/>
+						<div class="valid-feedback">Idade informado</div>
+						<div class="invalid-feedback">O idade deve ser informado</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="email">Email</label>
+						<input
+							type="text"
+							name="email"
+							class="form-control"
+							id="email"
+							placeholder="digite seu email"
+							value=""
+							required
+						/>
+						<div class="valid-feedback">Email informado</div>
+						<div class="invalid-feedback">O email deve ser informado</div>
+					</div>
+				</div>
+				<button class="btn btn-primary" type="submit">Enviar</button>
+				<button onclick="mostrarTable()" class="btn btn-danger" type="reset" >Cancelar</button>
+			</form>
 
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th>id</th>
-            <th>nome</th>
-            <th>idade</th>
-            <th>email</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+			<br />
+			<br />
 
-    <script>
-      const urlApi =
-      "http://localhost:3000/pessoas";
+			<div id="tablePessoa" class="table-responsive">
+				<div class="align-button">
+					<button onclick="mostrarForm()" type="button" class="btn btn-success">Adicionar</button>
+				</div>
+				<table class="table table-striped centered">
+					<thead class="thead-dark">
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Idade</th>
+							<th>Email</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
 
-      formPessoa = document.querySelector("#formPessoa");
 
-      formPessoa.addEventListener("submit", function (e){
-        e.preventDefault()
-
-        const formData = new FormData(formPessoa);
-
-        const pessoa = Object.fromEntries(formData);
-
-        fetch(urlApi,{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(pessoa),
-        }).then((res)=>{
-          getAllPessoas()
-        })
-      })
-
-      // GET PESSOAS - GET ALL
-
-      function getAllPessoas(){
-        fetch(urlApi)
-        .then((res) => {
-          return res.json();
-        })
-        .then((pessoas) => {
-          let listData = ""; // encher de item conforme tamanho de pessoas[]
-          tbody = document.querySelector("tbody");
-
-          for (let pessoa of pessoas) {
-            listData += `<tr>
-                <td>${pessoa.id}</td>
-                <td>${pessoa.nome}</td>
-                <td>${pessoa.idade}</td>
-                <td>${pessoa.email}</td>
-            </tr>`;
-          }
-
-          tbody.innerHTML = listData;
-        });
-
-      }
-
-      getAllPessoas()
-
-    </script>
-    <script>
-      // Exemplo de JavaScript inicial para desativar envios de formulário, se houver campos inválidos.
-      (function () {
-        "use strict";
-        window.addEventListener(
-          "load",
-          function () {
-            // Pega todos os formulários que nós queremos aplicar estilos de validação Bootstrap personalizados.
-            var forms = document.getElementsByClassName("needs-validation");
-            // Faz um loop neles e evita o envio
-            var validation = Array.prototype.filter.call(
-              forms,
-              function (form) {
-                form.addEventListener(
-                  "submit",
-                  function (event) {
-                    if (form.checkValidity() === false) {
-                      event.preventDefault();
-                      event.stopPropagation();
-                    }
-                    form.classList.add("was-validated");
-                  },
-                  false,
-                );
-              },
-            );
-          },
-          false,
-        );
-      })();
-    </script>
+    <script src="./js/script.js"></script>
+    <script src="js/valid-form.js"></script>
   </body>
 </html>
