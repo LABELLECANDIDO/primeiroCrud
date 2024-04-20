@@ -1,3 +1,150 @@
+//definindo a url
+const url = "/pessoas/";
+
+// Obtém o elemento <form> do DOM para manipulação posterior
+const formPessoa = document.querySelector("form");
+
+// Obtém o botão de salvar do DOM para manipulação posterior
+const salvarPessoaBtn = document.getElementById("salvarPessoa");
+
+formPessoa.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+	// Cria um objeto FormData a partir dos dados do formulário
+    const dataPessoa = new FormData(formPessoa);
+
+	 // Converte os dados do FormData em um objeto JavaScript
+    const dataPost = Object.fromEntries(dataPessoa);
+
+	// Verifica se os campos do formulário são válidos
+    if (validarCampos()) {
+        if (salvarPessoaBtn.innerText === "Salvar") {
+            salvarPessoa(dataPost);
+        } else {
+            atualizarPessoa(dataPost);
+        }
+    } else {
+		 // Se os campos não forem válidos, exibe uma mensagem de aviso
+        Swal.fire("Atenção!", "Por favor, preencha todos os campos.", "warning");
+    }
+});
+
+
+// Função para validar se os campos do formulário estão preenchidos
+function validarCampos() {
+    const nome = document.getElementById("nome").value.trim();
+    const idade = document.getElementById("idade").value.trim();
+    const email = document.getElementById("email").value.trim();
+    return nome !== "" && idade !== "" && email !== "";
+}
+
+
+function mostrarForm(status) {
+    salvarPessoaBtn.innerHTML = `<i class="fas fa-plus"></i> ${status}` ;
+    formPessoa.style.display = "block";
+    document.getElementById("tablePessoa").style.display = "none";
+}
+
+function mostrarTable() {
+    formPessoa.style.display = "none";
+    document.getElementById("tablePessoa").style.display = "block";
+}
+
+function salvarPessoa(dados) {
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(dados),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((res) => res.json())
+    .then((pessoa) => {
+        console.log(pessoa);
+        formPessoa.reset();
+        formPessoa.classList.remove("was-validated");
+        mostrarTable();
+        pegarPessoas();
+        Swal.fire("Sucesso!", "Pessoa salva com sucesso.", "success");
+    });
+}
+
+function atualizarPessoa(dados) {
+    fetch(url + dados.id, {
+        method: "PATCH",
+        body: JSON.stringify(dados),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((res) => res.json())
+    .then((pessoa) => {
+        console.log(pessoa);
+        formPessoa.reset();
+        formPessoa.classList.remove("was-validated");
+        mostrarTable();
+        pegarPessoas();
+        Swal.fire("Sucesso!", "Pessoa atualizada com sucesso.", "success");
+    });
+}
+
+function pegarPessoas() {
+    fetch(url)
+    .then((res) => res.json())
+    .then((pessoas) => {
+        console.log(pessoas);
+        let listaPessoas = "";
+        for (let pessoa of pessoas) {
+            listaPessoas += `
+            <tr>
+                <th scope="row">${pessoa.id}</th>
+                <td>${pessoa.nome}</td>
+                <td>${pessoa.idade}</td>
+                <td>${pessoa.email}</td>
+                <td>
+                    <button onclick="editarPessoa(${pessoa.id})" class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                    <button onclick="deletarPessoa(${pessoa.id})" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </td>
+            </tr>
+            `;
+        }
+        document.querySelector("tbody").innerHTML = listaPessoas;
+    });
+}
+
+function editarPessoa(id) {
+    fetch(url + id)
+    .then((res) => res.json())
+    .then((pessoa) => {
+        document.getElementById("idPessoa").value = pessoa.id;
+        document.getElementById("nome").value = pessoa.nome;
+        document.getElementById("idade").value = pessoa.idade;
+        document.getElementById("email").value = pessoa.email;
+        mostrarForm('Atualizar');
+    });
+}
+
+function deletarPessoa(id) {
+    fetch(url + id, {
+        method: "DELETE",
+    })
+    .then(() => {
+        pegarPessoas();
+        Swal.fire("Sucesso!", "Pessoa deletada com sucesso.", "success");
+    });
+}
+
+pegarPessoas();
+
+
+
+
+
+
+
+
+/*
+
 const urlApi ="/pessoas/";
 
 document.getElementById("formPessoa").style = "display: none";
@@ -114,4 +261,4 @@ function excluirPessoa(id) {
 	});
 }
  
-getAllPessoas(); 
+getAllPessoas(); */

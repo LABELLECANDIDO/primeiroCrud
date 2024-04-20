@@ -1,24 +1,3 @@
 {
-  "pessoas": [
-    {
-      "idPessoa": "2",
-      "nome": "labelle",
-      "idade": "12",
-      "email": "jiv i",
-      "id": 2
-    },
-    {
-      "idPessoa": "4",
-      "nome": "labelle",
-      "idade": "1",
-      "email": "labelle@candivvv",
-      "id": 4
-    },
-    {
-      "nome": "labelle",
-      "idade": "1",
-      "email": "labelle@candido.com",
-      "id": 5
-    }
-  ]
+  "pessoas": []
 }
