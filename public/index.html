@@ -1,65 +1,118 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastrar Pessoa</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-    <div class="container">
-        <form class="needs-validation" novalidate>
-            <h1 style="text-align: center">Cadastrar Pessoa</h1>
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <input type="hidden" value="" name="id" id="idPessoa">
-                    <label for="nome">Primeiro nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
-                    <div class="valid-feedback">Nome Preenchido</div>
-                    <div class="invalid-feedback">Por favor, preencha o nome</div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="idade">Idade</label>
-                    <input type="text" class="form-control" id="idade" name="idade" placeholder="Idade" required>
-                    <div class="valid-feedback">Idade preenchida</div>
-                    <div class="invalid-feedback">Por favor, preencha a idade</div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="email">Usuário</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        </div>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Usuário" aria-describedby="inputGroupPrepend" required>
-                        <div class="valid-feedback">Email Preenchido</div>
-                        <div class="invalid-feedback">Por favor, preencha o email.</div>
-                    </div>
-                </div>
-            </div>
-            <button id="salvarPessoa" class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Salvar</button>
-            <button onclick="mostrarTable()" class="btn btn-danger" type="button"><i class="fas fa-times"></i> Cancelar</button>
-        </form>
+  </head>
+  <body>
+    <div class="pos-f-t">
+      <div class="collapse" id="navbarToggleExternalContent">
+        <div class="bg-dark p-4">
+          <h5 class="text-white h4">Conteúdo expandido</h5>
+          <span class="text-muted">Expansível, atráves da marca no navbar.</span>
+        </div>
+      </div>
+      <nav class="navbar navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Alterna navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
     </div>
-
-    <div id="tablePessoa" class="container" style="display: none;">
-        <h1 style="text-align: center">Lista de Pessoas</h1>
-        <button onclick="mostrarForm('Salvar')" class="btn btn-primary"><i class="fas fa-plus"></i> Adicionar</button>
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Idade</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-			</div>
-		</div>
+    <div class="container">
+      <form class="needs-validation" novalidate>
+        <h1 style="text-align: center">Cadastrar Pessoa</h1>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <input type="hidden" value="" name="id" id="idPessoa" />
+            <label for="nome">Primeiro nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nome"
+              name="nome"
+              placeholder="Nome"
+              required
+            />
+            <div class="valid-feedback">Nome Preenchido</div>
+            <div class="invalid-feedback">Por favor, preencha o nome</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="idade">Data de Nascimento</label>
+            <input
+              type="date"
+              class="form-control"
+              id="dataNascimento"
+              name="dataNascimento"
+              required
+            />
+            <div class="valid-feedback">Data de Nascimento preenchida</div>
+            <div class="invalid-feedback">
+              Por favor, preencha a data de nascimento
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="email">Usuário</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Usuário"
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <div class="valid-feedback">Email Preenchido</div>
+              <div class="invalid-feedback">Por favor, preencha o email.</div>
+            </div>
+          </div>
+        </div>
+        <button id="salvarPessoa" class="btn btn-primary" type="submit">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button onclick="mostrarTable()" class="btn btn-danger" type="button">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </form>
+    </div>
+    <div id="tablePessoa" class="container" style="display: none">
+      <h1 style="text-align: center">Lista de Pessoas</h1>
+      <div style="display: flex; justify-content: flex-start">
+        <input style="margin-bottom: 10px; margin-right: 10px" id="input" name="name" type="text" placeholder="Buscar usuário" autofocus></input>
+        <button
+          style="margin-bottom: 10px"
+          onclick="mostrarForm('Salvar')"
+          class="btn btn-primary float-right">
+          <i class="fas fa-plus"></i> Adicionar
+        </button>
+      </div>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Data de Nascimento</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Email</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
 
     <script src="./js/script.js"></script>
