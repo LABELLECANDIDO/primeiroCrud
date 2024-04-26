@@ -71,6 +71,7 @@ function salvarPessoa(dados) {
       formPessoa.classList.remove("was-validated");
       mostrarTable();
       pegarPessoas();
+      document.getElementById("idPessoa").value = "";
       Swal.fire("Sucesso!", "Pessoa salva com sucesso.", "success");
     });
 }
@@ -90,6 +91,7 @@ function atualizarPessoa(dados) {
       formPessoa.classList.remove("was-validated");
       mostrarTable();
       pegarPessoas();
+      document.getElementById("idPessoa").value = "";
       Swal.fire("Sucesso!", "Pessoa atualizada com sucesso.", "success");
     });
 }
